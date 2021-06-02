@@ -159,7 +159,7 @@ void field::special_summon_rule(uint32 sumplayer, card* target, uint32 summon_ty
 	add_process(PROCESSOR_SPSUMMON_RULE, 0, 0, (group*)target, sumplayer, summon_type);
 }
 void field::special_summon(card_set* target, uint32 sumtype, uint32 sumplayer, uint32 playerid, uint32 nocheck, uint32 nolimit, uint32 positions, uint32 zone) {
-	if((positions & POS_FACEDOWN) && is_player_affected_by_effect(sumplayer, EFFECT_DEVINE_LIGHT))
+	if((positions & POS_FACEDOWN) && is_player_affected_by_effect(sumplayer, EFFECT_DIVINE_LIGHT))
 		positions = (positions & POS_FACEUP) | ((positions & POS_FACEDOWN) >> 1);
 	for(auto& pcard : *target) {
 		pcard->temp.reason = pcard->current.reason;
@@ -177,7 +177,7 @@ void field::special_summon(card_set* target, uint32 sumtype, uint32 sumplayer, u
 	add_process(PROCESSOR_SPSUMMON, 0, core.reason_effect, pgroup, core.reason_player, zone);
 }
 void field::special_summon_step(card* target, uint32 sumtype, uint32 sumplayer, uint32 playerid, uint32 nocheck, uint32 nolimit, uint32 positions, uint32 zone) {
-	if((positions & POS_FACEDOWN) && is_player_affected_by_effect(sumplayer, EFFECT_DEVINE_LIGHT))
+	if((positions & POS_FACEDOWN) && is_player_affected_by_effect(sumplayer, EFFECT_DIVINE_LIGHT))
 		positions = (positions & POS_FACEUP) | ((positions & POS_FACEDOWN) >> 1);
 	target->temp.reason = target->current.reason;
 	target->temp.reason_effect = target->current.reason_effect;
@@ -194,7 +194,6 @@ void field::special_summon_complete(effect* reason_effect, uint8 reason_player) 
 	group* ng = pduel->new_group();
 	ng->container.swap(core.special_summoning);
 	ng->is_readonly = TRUE;
-	//core.special_summoning.clear();
 	add_process(PROCESSOR_SPSUMMON, 1, reason_effect, ng, reason_player, 0);
 }
 void field::destroy(card_set* targets, effect* reason_effect, uint32 reason, uint32 reason_player, uint32 playerid, uint32 destination, uint32 sequence) {
@@ -1762,7 +1761,7 @@ int32 field::summon(uint16 step, uint8 sumplayer, card* target, effect* proc, ui
 	case 8: {
 		uint8 targetplayer = sumplayer;
 		uint8 positions = POS_FACEUP_ATTACK;
-		if(is_player_affected_by_effect(sumplayer, EFFECT_DEVINE_LIGHT))
+		if(is_player_affected_by_effect(sumplayer, EFFECT_DIVINE_LIGHT))
 			positions = POS_FACEUP;
 		if(proc && proc->is_flag(EFFECT_FLAG_SPSUM_PARAM)) {
 			positions = (uint8)proc->s_range & POS_FACEUP;
